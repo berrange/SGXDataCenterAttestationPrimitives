@@ -66,12 +66,6 @@ SGX_MODE ?= HW
 SGX_ARCH ?= x64
 SGX_DEBUG ?= 0
 
-ifndef _TD_MIGRATION
-    ifneq ($(MAKECMDGOALS),clean)
-    include $(SGX_SDK)/share/buildenv.mk
-    endif
-endif
-
 ifeq ($(shell getconf LONG_BIT), 32)
 	SGX_ARCH := x86
 else ifeq ($(findstring -m32, $(CXXFLAGS)), -m32)
