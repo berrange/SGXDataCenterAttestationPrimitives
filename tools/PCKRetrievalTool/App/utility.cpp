@@ -235,8 +235,12 @@ bool load_enclave(const char* enclave_name, sgx_enclave_id_t* p_eid)
     char enclave_path[MAX_PATH] = "";
 #endif
 
+#ifdef SGX_ENCLAVE_PATH
+    (void)strcpy(enclave_path, SGX_ENCLAVE_PATH);
+#else
     if (!get_program_path(enclave_path, MAX_PATH - 1))
         return false;
+#endif
 #if defined(_MSC_VER)    
     if (_tcsnlen(enclave_path, MAX_PATH) + _tcsnlen(enclave_name, MAX_PATH) + sizeof(char) > MAX_PATH)
         return false;

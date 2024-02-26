@@ -409,6 +409,13 @@ bool tee_att_config_t::get_qe_path(tee_att_ae_type_t type,
         return false;
     }
 #ifndef _MSC_VER
+#ifdef SGX_ENCLAVE_PATH
+    if ((strlen(SGX_ENCLAVE_PATH) + strlen(p_file_name) + 1) > buf_size) {
+        return false;
+    }
+    strcpy(p_file_path, SGX_ENCLAVE_PATH);
+    strcat(p_file_path, p_file_name);
+#else
     Dl_info dl_info;
     if(*context_path)
     {
@@ -452,6 +459,7 @@ bool tee_att_config_t::get_qe_path(tee_att_ae_type_t type,
         return false;
     }
     (void)strncat(p_file_path,p_file_name, strnlen(p_file_name,buf_size));
+#endif
 #else
     HMODULE hModule = NULL;
     if (*context_path)
