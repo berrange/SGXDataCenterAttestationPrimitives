@@ -18,7 +18,7 @@ CNL_Lib_Include_Paths := -I../../quote_wrapper/common/inc       \
                          -I../inc -I$(SGX_SDK)/include          \
                          -I../../common/inc/internal            \
                          -I../../pce_wrapper/inc                \
-                         -I../../../QuoteVerification/QVL/Src/ThirdParty/rapidjson/include/rapidjson	\
+                         $(pkg-config --cflags RapidJSON) \
                          -I../../../tools/PCKCertSelection/include
 
 CNL_Lib_C_Flags := $(COMMON_FLAGS) -g -fPIC -Werror -Wno-attributes $(CNL_Lib_Include_Paths) $(shell pkg-config --cflags libcrypto)
