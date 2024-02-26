@@ -47,6 +47,7 @@
 #include <string>
 #include <ctime>
 #include <stdexcept>
+#include <cstdint>
 
 // Forward declarations for rapidjson
 namespace rapidjson {
@@ -1088,6 +1089,7 @@ namespace intel { namespace sgx { namespace dcap { namespace parser
              * @param other PCK certificate
              * @return true if equal
              */
+            using Certificate::operator==;
             virtual bool operator==(const PckCertificate& other) const;
 
             /**
@@ -1204,6 +1206,8 @@ namespace intel { namespace sgx { namespace dcap { namespace parser
              * @param other PCK certificate
              * @return true if equal
              */
+            using Certificate::operator==;
+            using PckCertificate::operator==;
             virtual bool operator==(const PlatformPckCertificate& other) const;
 
             /**
