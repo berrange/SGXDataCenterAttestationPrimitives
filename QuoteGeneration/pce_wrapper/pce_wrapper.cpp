@@ -105,6 +105,13 @@ bool get_pce_path(
         return false;
     }
 
+#ifdef SGX_ENCLAVE_PATH
+    if ((strlen(SGX_ENCLAVE_PATH) + strlen(PCE_ENCLAVE_NAME) + 1) > buf_size) {
+        return false;
+    }
+    strcpy(p_file_path, SGX_ENCLAVE_PATH);
+    strcat(p_file_path, PCE_ENCLAVE_NAME);
+#else
     Dl_info dl_info;
     if(g_pce_status.pce_path[0])
     {
@@ -149,6 +156,7 @@ bool get_pce_path(
         else p_file_path[0] = '\0';
         (void)strncat(p_file_path,PCE_ENCLAVE_NAME_LEGACY, strnlen(PCE_ENCLAVE_NAME_LEGACY,buf_size));
     }
+#endif
     return true;
 }
 #endif
