@@ -560,6 +560,13 @@ get_qe_path(const TCHAR *p_file_name,
     }
 
 #ifndef _MSC_VER
+#ifdef SGX_ENCLAVE_PATH
+    if ((strlen(SGX_ENCLAVE_PATH) + strlen(p_file_name) + 1) > buf_size) {
+        return false;
+    }
+    strcpy(p_file_path, SGX_ENCLAVE_PATH);
+    strcat(p_file_path, p_file_name);
+#else
     Dl_info dl_info;
     if(!strncmp(p_file_name, QE3_ENCLAVE_NAME, sizeof(QE3_ENCLAVE_NAME)) && g_ql_global_data.qe3_path[0])
     {
@@ -605,6 +612,7 @@ get_qe_path(const TCHAR *p_file_name,
         return false;
     }
     (void)strncat(p_file_path,p_file_name, strnlen(p_file_name,buf_size));
+#endif
 #else
     HMODULE hModule = NULL;
 #ifndef AESM_ECDSA_BUNDLE
