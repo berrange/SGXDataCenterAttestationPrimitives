@@ -101,6 +101,8 @@ CXXFLAGS += -std=c++11
 App_Cpp_Files := $(wildcard App/linux/*.cpp App/*.cpp)
 App_Include_Paths := -I$(SGX_SDK)/include -I ./App/inc
 App_Include_Paths += -I ../../QuoteGeneration/common/inc/internal 
+App_Include_Paths += -I ../../QuoteGeneration/quote_wrapper/common/inc
+App_Include_Paths += -I ../../QuoteGeneration/pce_wrapper/inc
 App_Include_Paths += -I ../../QuoteGeneration/ae/inc/internal -I ../SGXPlatformRegistration/include
 
 App_C_Flags := $(COMMON_FLAGS) -fPIC -Wno-attributes $(App_Include_Paths)
