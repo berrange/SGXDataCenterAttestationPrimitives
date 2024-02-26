@@ -68,7 +68,7 @@ SGX_DEBUG ?= 0
 
 ifndef _TD_MIGRATION
     ifneq ($(MAKECMDGOALS),clean)
-    include $(SGX_SDK)/buildenv.mk
+    include $(SGX_SDK)/share/buildenv.mk
     endif
 endif
 
