@@ -70,9 +70,9 @@ else
 COMMON_INCLUDE := -I$(SGX_SDK)/include -I$(SGX_SDK)/include/tlibc -I$(SGX_SDK)/include/libcxx -I$(SGXSSL_PACKAGE_PATH)/include
 endif
 
-QVL_LIB_INC := -I$(QVL_COMMON_PATH)/include -I$(QVL_COMMON_PATH)/include/Utils -I$(QVL_LIB_PATH)/include -I$(QVL_LIB_PATH)/src -I$(QVL_PARSER_PATH)/include -I$(QVL_SRC_PATH)/ThirdParty/rapidjson/include
+QVL_LIB_INC := -I$(QVL_COMMON_PATH)/include -I$(QVL_COMMON_PATH)/include/Utils -I$(QVL_LIB_PATH)/include -I$(QVL_LIB_PATH)/src -I$(QVL_PARSER_PATH)/include $(pkg-config --cflags RapidJSON)
 
-QVL_PARSER_INC := -I$(QVL_COMMON_PATH)/include -I$(QVL_COMMON_PATH)/include/Utils -I$(QVL_SRC_PATH) -I$(QVL_PARSER_PATH)/include -I$(QVL_PARSER_PATH)/src -I$(QVL_LIB_PATH)/include -I$(QVL_SRC_PATH)/ThirdParty/rapidjson/include
+QVL_PARSER_INC := -I$(QVL_COMMON_PATH)/include -I$(QVL_COMMON_PATH)/include/Utils -I$(QVL_SRC_PATH) -I$(QVL_PARSER_PATH)/include -I$(QVL_PARSER_PATH)/src -I$(QVL_LIB_PATH)/include $(pkg-config --cflags RapidJSON)
 
 QVL_LIB_FILES := $(sort $(wildcard $(QVL_LIB_PATH)/src/*.cpp) $(wildcard $(QVL_LIB_PATH)/src/*/*.cpp) $(wildcard $(QVL_COMMON_PATH)/src/Utils/*.cpp))
 QVL_PARSER_FILES := $(sort $(wildcard $(QVL_PARSER_PATH)/src/*.cpp) $(wildcard $(QVL_PARSER_PATH)/src/*/*.cpp))

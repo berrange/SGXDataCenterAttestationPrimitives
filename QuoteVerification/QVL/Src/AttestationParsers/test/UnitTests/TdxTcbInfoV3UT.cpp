@@ -35,7 +35,7 @@
 #include <Utils/TimeUtils.h>
 
 #include <gtest/gtest.h>
-#include "rapidjson/document.h"
+#include <rapidjson/document.h>
 
 using namespace testing;
 using namespace intel::sgx::dcap;
