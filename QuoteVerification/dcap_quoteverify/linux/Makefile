@@ -35,15 +35,15 @@ include ../../buildenv.mk
 INSTALL_PATH 		?= /usr/lib/x86_64-linux-gnu
 QVE_SRC_PATH		:= $(DCAP_QV_DIR)/QvE
 
-QVL_LIB_INC		+= -I$(PREBUILD_OPENSSL_PATH)/inc -I$(QVE_SRC_PATH)/Include
-QVL_PARSER_INC  += -I$(PREBUILD_OPENSSL_PATH)/inc
+QVL_LIB_INC		+= $(pkg-config --cflags libcrypto) -I$(QVE_SRC_PATH)/Include
+QVL_PARSER_INC  += $(pkg-config --cflags libcrypto)
 QVL_VERIFY_INC	:= -I$(QVE_SRC_PATH)/Include \
 				   -I../inc \
 				   -I$(DCAP_QG_DIR)/quote_wrapper/common/inc \
                    -I$(SGX_SDK)/include \
 				   -I$(DCAP_QG_DIR)/common/inc/internal \
 				   -I$(DCAP_QG_DIR)/pce_wrapper/inc \
-				   -I$(PREBUILD_OPENSSL_PATH)/inc \
+				   $(pkg-config --cflags libcrypto) \
 				   -I$(QVL_SRC_PATH) \
 				   $(QVL_LIB_INC)
 
@@ -59,7 +59,7 @@ QVL_PARSER := sgx_dcap_qvl_attestation
 QVL_LIB_NAME := lib$(QVL_LIB).a
 QVL_PARSER_NAME := lib$(QVL_PARSER).a
 
-LDUFLAGS	:= -pthread -ldl -L. -l$(QVL_LIB) -l$(QVL_PARSER) $(COMMON_LDFLAGS) -L$(PREBUILD_OPENSSL_PATH)/lib/linux64 -lcrypto
+LDUFLAGS	:= -pthread -ldl -L. -l$(QVL_LIB) -l$(QVL_PARSER) $(COMMON_LDFLAGS) -lcrypto
 LDUFLAGS	+= -Wl,--version-script=sgx_dcap_quoteverify.lds -Wl,--gc-sections
 
 QVL_VERIFY_CPP_SRCS := $(wildcard ../*.cpp) $(wildcard *.cpp)
