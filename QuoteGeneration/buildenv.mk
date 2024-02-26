@@ -66,15 +66,6 @@ SGX_MODE ?= HW
 SGX_ARCH ?= x64
 SGX_DEBUG ?= 0
 
-ifndef SERVTD_ATTEST
-    ifneq ($(origin SGX_SDK),file)
-      include $(SGX_SDK)/buildenv.mk
-	  else
-$(info You may need to set environment variables if the SGX SDK is installed.)
-$(info Use a command like 'source /opt/intel/sgxsdk/environment')
-    endif
-endif
-
 ifeq ($(shell getconf LONG_BIT), 32)
 	SGX_ARCH := x86
 else ifeq ($(findstring -m32, $(CXXFLAGS)), -m32)
