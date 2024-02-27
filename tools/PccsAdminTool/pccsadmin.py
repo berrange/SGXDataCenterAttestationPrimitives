@@ -16,7 +16,7 @@ from urllib.parse import unquote
 import traceback
 
 PCS_SERVICE_URL = 'https://api.trustedservices.intel.com/sgx/certification/v4/'
-PCCS_SERVICE_URL = 'https://localhost:8081/sgx/certification/v4'
+PCCS_SERVICE_URL = 'https://localhost:10801/sgx/certification/v4'
 
 def main():
     parser = argparse.ArgumentParser(description="Administrator tool for PCCS")
@@ -26,7 +26,7 @@ def main():
     #  subparser for get
     parser_get = subparsers.add_parser('get', formatter_class=argparse.RawTextHelpFormatter)
     # add optional arguments for get
-    parser_get.add_argument("-u", "--url", help="The URL of the PCCS's GET platforms API; default: https://localhost:8081/sgx/certification/v4/platforms")
+    parser_get.add_argument("-u", "--url", help="The URL of the PCCS's GET platforms API; default: https://localhost:10801/sgx/certification/v4/platforms")
     parser_get.add_argument("-o", "--output_file", help="The output file name for platform list; default: platform_list.json")
     parser_get.add_argument("-s", "--source", help=
               "reg - Get platforms from registration table.(default)\n"
@@ -37,12 +37,12 @@ def main():
     #  subparser for put
     description_put = (
     "This put command supports the following formats([] means optional):\n"
-    "1. pccsadmin put [-u https://localhost:8081/sgx/certification/v4/platformcollateral] [-i your_collateral_file]\n"
-    "2. pccsamdin put -u https://localhost:8081/sgx/certification/v4/appraisalpolicy [-d] -f fmspc -i your_policy_file"
+    "1. pccsadmin put [-u https://localhost:10801/sgx/certification/v4/platformcollateral] [-i your_collateral_file]\n"
+    "2. pccsamdin put -u https://localhost:10801/sgx/certification/v4/appraisalpolicy [-d] -f fmspc -i your_policy_file"
     )
     parser_put = subparsers.add_parser('put', description=description_put, formatter_class=argparse.RawTextHelpFormatter)
     # add optional arguments for put
-    parser_put.add_argument("-u", "--url", help="The URL of the PCCS's API; default: https://localhost:8081/sgx/certification/v4/platformcollateral")
+    parser_put.add_argument("-u", "--url", help="The URL of the PCCS's API; default: https://localhost:10801/sgx/certification/v4/platformcollateral")
     parser_put.add_argument("-i", "--input_file", help="The input file name for platform collaterals or appraisal policy; default: platform_collaterals.json")
     parser_put.add_argument("-d", "--default", help="This policy will become the default policy for this FMSPC.", action="store_true")
     parser_put.add_argument('-f', '--fmspc', type=str, help="FMSPC value")
@@ -68,7 +68,7 @@ def main():
     #  subparser for refresh
     parser_refresh = subparsers.add_parser('refresh')
     # add optional arguments for refresh
-    parser_refresh.add_argument("-u", "--url", help="The URL of the PCCS's refresh API; default: https://localhost:8081/sgx/certification/v4/refresh")
+    parser_refresh.add_argument("-u", "--url", help="The URL of the PCCS's refresh API; default: https://localhost:10801/sgx/certification/v4/refresh")
     parser_refresh.add_argument("-f", "--fmspc", help="Only refresh certificates for specified FMSPCs. Format: [FMSPC1, FMSPC2, ..., FMSPCn]")
     parser_refresh.set_defaults(func=pccs_refresh)
 
