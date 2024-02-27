@@ -40,7 +40,7 @@ const { createLogger, format, transports } = winston;
 const options = {
   file: {
     level: Config.has('LogLevel') ? Config.get('LogLevel') : 'info',
-    filename: __dirname + `/../logs/pccs_server.log`,
+    filename: `/var/log/pccs/pccs_server.log`,
     handleExceptions: true,
     json: false,
     colorize: true,

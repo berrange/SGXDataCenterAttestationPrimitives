@@ -92,6 +92,7 @@ async function db_migration() {
     },
     migrations: {
       pattern: /\.js|\.up\.sql$/,
+      path: '/usr/share/pccs/migrations',
       customResolver: (path) => {
         return {
           up: async (sequelize) => {
