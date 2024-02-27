@@ -84,8 +84,8 @@ async function test_db_status() {
 }
 
 async function db_migration() {
-  const migrations = fs.readdirSync('./migrations').map(name => {
-    const path = `./migrations/${name}`;
+  const migrations = fs.readdirSync('/usr/share/pccs/migrations/').map(name => {
+    const path = `/usr/share/pccs/migrations/${name}`;
 
     return {
       name,
@@ -123,7 +123,7 @@ async function db_migration() {
 
   const umzug = new Umzug({
     migrations: {
-      glob: './migrations/*.{js,up.sql}',
+      glob: '/usr/share/pccs/migrations/*.{js,up.sql}',
       resolve: ({name}) => migrations.find(migration => migration.name === name),
     },
     context: sequelize,

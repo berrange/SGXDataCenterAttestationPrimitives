@@ -52,7 +52,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 ////////////// Load library ////////////////////////////////
 let dllpath = 'PCKCertSelectionLib.dll';
 if (process.platform === 'linux') {
-  dllpath = path.join(__dirname, '../lib/libPCKCertSelection.so');
+  dllpath = '/lib64/libPCKCertSelection.so';
 }
 const pcklib = ffi.Library(dllpath, {
   pck_cert_select: [
