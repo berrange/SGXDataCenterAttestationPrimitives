@@ -5,7 +5,7 @@ import json
 import binascii
 from urllib import parse
 from OpenSSL import crypto
-from pypac import PACSession
+#from pypac import PACSession
 from platform import system
 from lib.intelsgx.credential import Credentials
 from requests.adapters import HTTPAdapter
