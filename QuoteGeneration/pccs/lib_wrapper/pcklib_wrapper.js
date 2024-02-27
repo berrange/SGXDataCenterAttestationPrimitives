@@ -37,7 +37,7 @@ import { load, DataType, open, close, createPointer, arrayConstructor, restorePo
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 let libpath = 'PCKCertSelectionLib.dll';
 if (process.platform === 'linux') {
-  libpath = path.join(__dirname, '../lib/libPCKCertSelection.so');
+  libpath = '/lib64/libPCKCertSelection.so.1';
 }
 open({
   library: 'libPCKCertSelection', // key
