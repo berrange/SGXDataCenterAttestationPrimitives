@@ -80,7 +80,7 @@ protected:
     // Local cache only mode
     bool local_cache_only_;
 
-    QcnlConfig() : server_url_("https://localhost:8081/sgx/certification/v4/"),
+    QcnlConfig() : server_url_("https://localhost:10801/sgx/certification/v4/"),
                    use_secure_cert_(true),
                    collateral_service_url_(server_url_),
                    collateral_version_("3.0"),

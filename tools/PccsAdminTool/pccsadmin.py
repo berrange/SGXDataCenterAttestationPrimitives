@@ -16,7 +16,7 @@ from urllib.parse import unquote
 import traceback
 
 PCS_SERVICE_URL = 'https://api.trustedservices.intel.com/sgx/certification/v4/'
-PCCS_SERVICE_URL = 'https://localhost:8081/sgx/certification/v4'
+PCCS_SERVICE_URL = 'https://localhost:10801/sgx/certification/v4'
 
 def main():
     parser = argparse.ArgumentParser(description="Administrator tool for PCCS")
@@ -26,7 +26,7 @@ def main():
     #  subparser for get
     parser_get = subparsers.add_parser('get', formatter_class=argparse.RawTextHelpFormatter)
     # add optional arguments for get
-    parser_get.add_argument("-u", "--url", help="The URL of the PCCS's GET platforms API; default: https://localhost:8081/sgx/certification/v4/platforms")
+    parser_get.add_argument("-u", "--url", help="The URL of the PCCS's GET platforms API; default: https://localhost:10801/sgx/certification/v4/platforms")
     parser_get.add_argument("-o", "--output_file", help="The output file name for platform list; default: platform_list.json")
     parser_get.add_argument("-s", "--source", help=
               "reg - Get platforms from registration table.(default)\n"
@@ -37,7 +37,7 @@ def main():
     #  subparser for put
     parser_put = subparsers.add_parser('put')
     # add optional arguments for put
-    parser_put.add_argument("-u", "--url", help="The URL of the PCCS's PUT collateral API; default: https://localhost:8081/sgx/certification/v4/platformcollateral")
+    parser_put.add_argument("-u", "--url", help="The URL of the PCCS's PUT collateral API; default: https://localhost:10801/sgx/certification/v4/platformcollateral")
     parser_put.add_argument("-i", "--input_file", help="The input file name for platform collaterals; default: platform_collaterals.json")
     parser_put.set_defaults(func=pccs_put)
 
@@ -61,7 +61,7 @@ def main():
     #  subparser for refresh
     parser_refresh = subparsers.add_parser('refresh')
     # add optional arguments for refresh
-    parser_refresh.add_argument("-u", "--url", help="The URL of the PCCS's refresh API; default: https://localhost:8081/sgx/certification/v4/refresh")
+    parser_refresh.add_argument("-u", "--url", help="The URL of the PCCS's refresh API; default: https://localhost:10801/sgx/certification/v4/refresh")
     parser_refresh.add_argument("-f", "--fmspc", help="Only refresh certificates for specified FMSPCs. Format: [FMSPC1, FMSPC2, ..., FMSPCn]")
     parser_refresh.set_defaults(func=pccs_refresh)
 

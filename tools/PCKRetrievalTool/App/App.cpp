@@ -67,7 +67,7 @@ uint32_t COMM_API sgx_tool_get_launch_token(
 
 void PrintHelp() {
     printf("Usage: %s [OPTION] \n", VER_PRODUCTNAME_STR);
-    printf("Example: %s -f pck_retrieval_result.csv -url https://localhost:8081 -user_token 123456 -use_secure_cert true -platform_id\n", VER_PRODUCTNAME_STR);
+    printf("Example: %s -f pck_retrieval_result.csv -url https://localhost:10801 -user_token 123456 -use_secure_cert true -platform_id\n", VER_PRODUCTNAME_STR);
     printf( "\nOptions:\n");
     printf( " -f filename                          - output the retrieval result to the \"filename\"\n");
     printf( " -url cache_server_address            - cache server's address \n");
@@ -169,7 +169,7 @@ int parse_arg(int argc, const char *argv[])
             }
         }
         else if (strncmp(argv[i], "-defaulturl", 11) == 0) {
-            server_url_string = "https://localhost:8081";
+            server_url_string = "https://localhost:10801";
             continue;
         }
         else if (strncmp(argv[i], "-proxy_type",11) == 0) {
