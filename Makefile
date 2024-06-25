@@ -33,7 +33,7 @@ CUR_MKFILE:= $(lastword $(MAKEFILE_LIST))
 
 .PHONY: all clean rebuild QuoteGeneration QuoteVerification PCKCertSelection PCKRetrievalTool SGXPlatformRegistration WinPle WinPleIntel
 
-all: QuoteGeneration QuoteVerification PCKCertSelection PCKRetrievalTool SGXPlatformRegistration WinPle WinPleIntel
+all: QuoteGeneration QuoteVerification PCKCertSelection PCKRetrievalTool SGXPlatformRegistration
 
 QuoteGeneration: QuoteVerification
 	$(MAKE) -C QuoteGeneration
