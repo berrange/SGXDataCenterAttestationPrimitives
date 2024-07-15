@@ -52,7 +52,8 @@ CFLAGS    += $(ENCLAVE_CFLAGS)
 
 LDTFLAGS  = -L$(SGX_LIBRARY_PATH) -Wl,--whole-archive $(TRTSLIB) -Wl,--no-whole-archive \
             -Wl,--start-group $(EXTERNAL_LIB) -Wl,--end-group -Wl,--build-id            \
-            -Wl,--version-script=$(WORK_DIR)/enclave.lds $(ENCLAVE_LDFLAGS)
+            -Wl,--version-script=$(WORK_DIR)/enclave.lds $(ENCLAVE_LDFLAGS) \
+            -Wl,-dynamic-linker,/nix/store/xmprbk52mlcdsljz66m8yf7cf0xf36n1-glibc-2.38-44/lib/ld-linux-x86-64.so.2
 
 LDTFLAGS_NO_CRYPTO = -L$(SGX_LIBRARY_PATH) -Wl,--whole-archive $(TRTSLIB) -Wl,--no-whole-archive \
             -Wl,--start-group $(EXTERNAL_LIB_NO_CRYPTO) -Wl,--end-group                    \

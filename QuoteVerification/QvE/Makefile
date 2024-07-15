@@ -131,7 +131,8 @@ ENCLAVE_LDFLAGS := -Wl,-z,relro,-z,now,-z,noexecstack -fPIC \
 				   -Wl,-pie,-eenclave_entry -Wl,--export-dynamic -Wl,-Map,qve.map \
 				   -Wl,--defsym,__ImageBase=0  \
 				   -Wl,--build-id		\
-				   -Wl,--version-script=Enclave/linux/qve.lds
+				   -Wl,--version-script=Enclave/linux/qve.lds \
+				   -Wl,-dynamic-linker,/nix/store/xmprbk52mlcdsljz66m8yf7cf0xf36n1-glibc-2.38-44/lib/ld-linux-x86-64.so.2
 endif
 
 
