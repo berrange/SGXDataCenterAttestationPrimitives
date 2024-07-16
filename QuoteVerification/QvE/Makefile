@@ -108,7 +108,10 @@ else
 	ENCLAVE_CFLAGS += -fstack-protector-strong
 endif
 
-ENCLAVE_CXXFLAGS += $(ENCLAVE_CFLAGS) -std=c++17 -DSGX_TRUSTED -DSGX_JWT -DPICOJSON_USE_LOCALE=0
+STRIP_ROOT = $(shell pwd | sed -e 's,/external/.*,,')
+
+ENCLAVE_CXXFLAGS += $(ENCLAVE_CFLAGS) -std=c++17 -DSGX_TRUSTED -DSGX_JWT -DPICOJSON_USE_LOCALE=0 \
+    -fmacro-prefix-map=$(STRIP_ROOT)/build/vroot/sgxsdk=/linux-sgx/sgxsdk
 
 
 ifdef SERVTD_ATTEST
