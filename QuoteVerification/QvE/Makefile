@@ -154,9 +154,9 @@ PREPARE_SGXSSL := ../prepare_sgxssl.sh
 SGXSSL_HEADER_CHECK := $(SGXSSL_PACKAGE_PATH)/include/openssl/opensslconf.h
 PREPARE_SGX_SSL:
 ifdef SERVTD_ATTEST
-	@test -f $(SGXSSL_PACKAGE_PATH)/lib64/lib$(SGXSSL_TCRYPTO).a && test -f $(SGXSSL_PACKAGE_PATH)/lib64/lib$(SGXSSL_TLIB).a && test -f $(SGXSSL_HEADER_CHECK) || $(PREPARE_SGXSSL) SERVTD_ATTEST
+	test -f $(SGXSSL_PACKAGE_PATH)/lib64/lib$(SGXSSL_TCRYPTO).a && test -f $(SGXSSL_PACKAGE_PATH)/lib64/lib$(SGXSSL_TLIB).a && test -f $(SGXSSL_HEADER_CHECK) || $(PREPARE_SGXSSL) SERVTD_ATTEST
 else
-	@test -f $(SGXSSL_PACKAGE_PATH)/lib64/lib$(SGXSSL_TCRYPTO).a && test -f $(SGXSSL_PACKAGE_PATH)/lib64/lib$(SGXSSL_TLIB).a && test -f $(SGXSSL_HEADER_CHECK) || $(PREPARE_SGXSSL)
+	test -f $(SGXSSL_PACKAGE_PATH)/lib64/lib$(SGXSSL_TCRYPTO).a && test -f $(SGXSSL_PACKAGE_PATH)/lib64/lib$(SGXSSL_TLIB).a && test -f $(SGXSSL_HEADER_CHECK) || $(PREPARE_SGXSSL)
 endif
 
 $(SGXSSL_HEADER_CHECK): PREPARE_SGX_SSL
@@ -169,25 +169,25 @@ install_lib: $(SIGNED_QVE_NAME) | $(BUILD_DIR)
 
 $(QVL_LIB_OBJS): %.o: %.cpp $(SGXSSL_HEADER_CHECK)
 ifdef SERVTD_ATTEST
-	@$(CXX) -DSERVTD_ATTEST $(ENCLAVE_CXXFLAGS) $(QVL_LIB_INC) -c $< -o $@
+	$(CXX) -DSERVTD_ATTEST $(ENCLAVE_CXXFLAGS) $(QVL_LIB_INC) -c $< -o $@
 else
-	@$(CXX) $(ENCLAVE_CXXFLAGS) $(QVL_LIB_INC) -c $< -o $@
+	$(CXX) $(ENCLAVE_CXXFLAGS) $(QVL_LIB_INC) -c $< -o $@
 endif
 	@echo "CXX  <=  $<"
 
 $(QVL_PARSER_OBJS): %.o: %.cpp $(SGXSSL_HEADER_CHECK)
-	@$(CXX) $(ENCLAVE_CXXFLAGS) $(QVL_PARSER_INC) -c $< -o $@
+	$(CXX) $(ENCLAVE_CXXFLAGS) $(QVL_PARSER_INC) -c $< -o $@
 	@echo "CXX  <=  $<"
 
 ifndef SERVTD_ATTEST
 Enclave/qve_t.h: $(SGX_EDGER8R) Enclave/qve.edl
-	@cd Enclave && $(SGX_EDGER8R) --trusted ../Enclave/qve.edl --search-path ../Enclave --search-path $(SGX_SDK)/include
+	cd Enclave && $(SGX_EDGER8R) --trusted ../Enclave/qve.edl --search-path ../Enclave --search-path $(SGX_SDK)/include
 	@echo "GEN  =>  $@"
 
 Enclave/qve_t.c: Enclave/qve_t.h
 
 Enclave/qve_t.o: Enclave/qve_t.c
-	@$(CC) $(SGX_COMMON_CFLAGS) $(ENCLAVE_CFLAGS) -c $< -o $@
+	$(CC) $(SGX_COMMON_CFLAGS) $(ENCLAVE_CFLAGS) -c $< -o $@
 	@echo "CC   <=  $<"
 endif
 
@@ -196,7 +196,7 @@ Enclave/%.o: Enclave/%.cpp $(SGXSSL_HEADER_CHECK)
 else
 Enclave/%.o: Enclave/%.cpp Enclave/qve_t.h $(SGXSSL_HEADER_CHECK)
 endif
-	@$(CXX) $(SGX_COMMON_CXXFLAGS) $(ENCLAVE_CXXFLAGS) $(QVL_LIB_INC) -I$(QVL_SRC_PATH) -c $< -o $@
+	$(CXX) $(SGX_COMMON_CXXFLAGS) $(ENCLAVE_CXXFLAGS) $(QVL_LIB_INC) -I$(QVL_SRC_PATH) -c $< -o $@
 	@echo "CXX  <=  $<"
 
 ifdef SERVTD_ATTEST
@@ -217,16 +217,16 @@ endif
 ifdef SERVTD_ATTEST
 $(QVE_NAME): $(QVE_OBJS) $(QVL_PARSER_OBJS) $(QVL_LIB_OBJS)
 	if [ ! -d "$(SERVTD_ATTEST_BUILD_DIR)" ]; then mkdir -p '$(SERVTD_ATTEST_BUILD_DIR)';fi
-	@$(CXX) $^ -shared -o $(SERVTD_ATTEST_BUILD_DIR)/$@ $(ENCLAVE_LDFLAGS) $(ENCLAVE_CXXFLAGS)
+	$(CXX) $^ -shared -o $(SERVTD_ATTEST_BUILD_DIR)/$@ $(ENCLAVE_LDFLAGS) $(ENCLAVE_CXXFLAGS)
 else
 $(QVE_NAME): $(QVE_OBJS) Enclave/qve_t.o $(QVL_PARSER_OBJS) $(QVL_LIB_OBJS)
-	@$(CXX)  $^ -o $@ $(ENCLAVE_LDFLAGS) $(ENCLAVE_CXXFLAGS) -Wl,-soname=${SIGNED_QVE_NAME}.$(call SPLIT_VERSION,$(QVE_VER),1)
+	$(CXX)  $^ -o $@ $(ENCLAVE_LDFLAGS) $(ENCLAVE_CXXFLAGS) -Wl,-soname=${SIGNED_QVE_NAME}.$(call SPLIT_VERSION,$(QVE_VER),1)
 	$(STRIP) --strip-unneeded --remove-section=.comment --remove-section=.note $@
 endif
 	@echo "LINK =>  $@"
 
 $(SIGNED_QVE_NAME): $(QVE_NAME)
-	@$(SGX_ENCLAVE_SIGNER) sign -key Enclave/qve_test_key.pem -enclave $(QVE_NAME) -out $@ -config $(QVE_CONFIG_FILE)
+	$(SGX_ENCLAVE_SIGNER) sign -key Enclave/qve_test_key.pem -enclave $(QVE_NAME) -out $@ -config $(QVE_CONFIG_FILE)
 	@echo "SIGN =>  $@"
 
 print-%  : ; @echo $* = $($*)
@@ -235,11 +235,11 @@ print-%  : ; @echo $* = $($*)
 
 clean:
 	@echo "Cleaning objects"
-	@rm -rf $(QVL_PARSER_OBJS) $(QVL_LIB_OBJS)
-	@rm -f .config_* $(QVE_NAME) $(SIGNED_QVE_NAME) Enclave/str_to_time.o Enclave/bionic_localtime.o $(QVE_OBJS)  Enclave/qve_t.* Enclave/*.d
-	@rm -f *.map
-	@rm -f $(SERVTD_ATTEST_BUILD_DIR)/$(QVE_NAME)
+	rm -rf $(QVL_PARSER_OBJS) $(QVL_LIB_OBJS)
+	rm -f .config_* $(QVE_NAME) $(SIGNED_QVE_NAME) Enclave/str_to_time.o Enclave/bionic_localtime.o $(QVE_OBJS)  Enclave/qve_t.* Enclave/*.d
+	rm -f *.map
+	rm -f $(SERVTD_ATTEST_BUILD_DIR)/$(QVE_NAME)
 
 SGXSSL_clean:
 	@echo "Cleaning sgxssl"
-	@rm -rf ../sgxssl/
+	rm -rf ../sgxssl/
