@@ -91,11 +91,11 @@ if [ "$1" = "nobuild" ]; then
 fi
 
 pushd $sgxssl_dir/Linux/
-sed -i '141a patch --merge -p1 < ../../../../prebuilt/openssl/openssl.CVE-2023-5678.patch || exit 1' build_openssl.sh
+sed -i '158a patch --merge -p1 < ../../../../prebuilt/openssl/openssl.CVE-2023-5678.patch || exit 1' build_openssl.sh
 if [[ "$*" == *SERVTD_ATTEST* ]];then
 make clean sgxssl_no_mitigation NO_THREADS=1 LINUX_SGX_BUILD=2 SERVTD_ATTEST=1
 else
-make clean sgxssl_no_mitigation 
+make clean sgxssl_no_mitigation ENCLAVE_SYSTEM_INCLUDES="$ENCLAVE_SYSTEM_INCLUDES"
 fi
 popd
 
