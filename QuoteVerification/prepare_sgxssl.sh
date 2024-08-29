@@ -94,7 +94,7 @@ pushd $sgxssl_dir/Linux/
 if [[ "$*" == *SERVTD_ATTEST* ]];then
 make clean sgxssl_no_mitigation NO_THREADS=1 LINUX_SGX_BUILD=2 SERVTD_ATTEST=1
 else
-make clean sgxssl_no_mitigation 
+make clean sgxssl_no_mitigation ENCLAVE_SYSTEM_INCLUDES="$ENCLAVE_SYSTEM_INCLUDES"
 fi
 popd
 
