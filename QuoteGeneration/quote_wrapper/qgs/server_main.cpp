@@ -273,6 +273,12 @@ int main(int argc, const char* argv[])
         if (strncmp(argv[i], "-l=", 3) == 0) {
             if (!apply_log_level(argv[i] + 3)) exit(1);
             break;
+        } else if (strncmp(argv[i], "--verbose", 3) == 0) {
+            if (!apply_log_level("info")) exit(1);
+            break;
+        } else if (strncmp(argv[i], "--debug", 3) == 0) {
+            if (!apply_log_level("debug")) exit(1);
+            break;
         }
     }
 
@@ -371,7 +377,7 @@ int main(int argc, const char* argv[])
             cout << "log level [" << argv[i] + 3 << "] found in cmdline" << endl;
             continue;
         } else {
-            cout << "Usage: " << argv[0] << " [--no-daemon] [-p=port_number] [-n=number_threads] [-l=log_level]"
+            cout << "Usage: " << argv[0] << " [--no-daemon] [-p=port_number] [-n=number_threads] [-l=log_level] [--verbose] [--debug]"
                 << endl;
             exit(1);
         }
