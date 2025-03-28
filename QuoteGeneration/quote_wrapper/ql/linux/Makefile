@@ -48,13 +48,14 @@ QL_Lib_C_Files := se_trace.c se_thread.c
 QL_Lib_Include_Paths := -I../../common/inc -I./ -I$(SGX_SDK)/include -I../../../common/inc/internal 
 QL_Lib_Include_Paths += -I../../quote/inc -I../../../pce_wrapper/inc -I../inc
 
-QL_Lib_C_Flags := $(COMMON_FLAGS) -g -fPIC -Wno-attributes $(QL_Lib_Include_Paths)
+QL_Lib_Common_Flags := $(COMMON_FLAGS) -g -fPIC -Wno-attributes $(QL_Lib_Include_Paths)
+QL_Lib_C_Flags := $(CFLAGS) $(QL_Lib_Common_Flags)
 
 LDUFLAGS:= -pthread $(COMMON_LDFLAGS)
 LDUFLAGS += -Wl,--version-script=dcap_ql_wrapper.lds -Wl,--gc-sections
 
-QL_Lib_Cpp_Flags := $(QL_Lib_C_Flags) -std=c++11
-QL_Lib_Link_Flags := $(SGX_COMMON_FLAGS) -g -L$(Quote_Library_Dir) -lsgx_qe3_logic -L$(PCE_Library_Dir) -lsgx_pce_logic -L$(TOP_DIR)/build/linux -L$(SGX_SDK)/lib64 -lpthread -ldl
+QL_Lib_Cpp_Flags := $(CXXFLAGS) $(QL_Lib_Common_Flags) -std=c++11
+QL_Lib_Link_Flags := $(LDFLAGS) $(SGX_COMMON_FLAGS) -g -L$(Quote_Library_Dir) -lsgx_qe3_logic -L$(PCE_Library_Dir) -lsgx_pce_logic -L$(TOP_DIR)/build/linux -L$(SGX_SDK)/lib64 -lpthread -ldl
 
 QL_Lib_Cpp_Flags += -DDISABLE_TRACE
 QL_Lib_Link_Flags += -DDISABLE_TRACE

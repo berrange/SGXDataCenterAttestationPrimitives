@@ -27,8 +27,8 @@ QVL_VERIFY_INC	:= -I$(QVE_SRC_PATH)/Include \
 
 QPL_BASE64_CPP_DEP	:= $(DCAP_QPL_DIR)/sgx_base64.d
 
-SGX_COMMON_CFLAGS	+= -g -fPIC -Wno-attributes -USGX_TRUSTED
-SGX_COMMON_CXXFLAGS	+= -g -fPIC -USGX_TRUSTED -DSGX_ENCLAVE_PATH="\"$(SGX_ENCLAVE_PATH)\""
+SGX_COMMON_CFLAGS	+= $(CFLAGS) -g -fPIC -Wno-attributes -USGX_TRUSTED
+SGX_COMMON_CXXFLAGS	+= $(CXXFLAGS) -g -fPIC -USGX_TRUSTED -DSGX_ENCLAVE_PATH="\"$(SGX_ENCLAVE_PATH)\""
 
 QVL_LIB_OBJS := $(QVL_LIB_FILES:.cpp=_untrusted.o)
 QVL_PARSER_OBJS := $(QVL_PARSER_FILES:.cpp=_untrusted.o)
@@ -38,7 +38,7 @@ QVL_PARSER := sgx_dcap_qvl_attestation
 QVL_LIB_NAME := lib$(QVL_LIB).a
 QVL_PARSER_NAME := lib$(QVL_PARSER).a
 
-LDUFLAGS	:= -pthread -ldl -L. -l$(QVL_LIB) -l$(QVL_PARSER) $(COMMON_LDFLAGS) -lcrypto
+LDUFLAGS	:= $(LDFLAGS) -pthread -ldl -L. -l$(QVL_LIB) -l$(QVL_PARSER) $(COMMON_LDFLAGS) -lcrypto
 LDUFLAGS	+= -Wl,--version-script=sgx_dcap_quoteverify.lds -Wl,--gc-sections
 
 QVL_VERIFY_CPP_SRCS := $(wildcard ../*.cpp) $(wildcard *.cpp)
