@@ -129,11 +129,11 @@ DEBUG_FLAGS := -m64 -O0 -g
 RELEASE_FLAGS := -m64 -O2 $(COMMON_FLAGS)
 
 # basic library c build flags
-C_FLAGS	:= -fPIC -fvisibility=hidden -fvisibility-inlines-hidden -Werror -Wno-overloaded-virtual $(LIB_INCLUDE_PATHS)
+C_FLAGS	:= $(CFLAGS) -fPIC -fvisibility=hidden -fvisibility-inlines-hidden -Werror -Wno-overloaded-virtual $(LIB_INCLUDE_PATHS)
 C_FLAGS += -UPCK_CERT_SELECTION_WITH_COMPONENT
 
 # link flags, link openssl crypto
-LINK_FLAGS := -shared -lcrypto -lpthread -ldl
+LINK_FLAGS := $(LDFLAGS) -shared -lcrypto -lpthread -ldl
 LINK_FLAGS += -Wl,--version-script=pck_cert_selection.lds -Wl,--gc-sections
 
 # debug/release switch
