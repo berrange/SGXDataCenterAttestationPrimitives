@@ -404,7 +404,13 @@ class PCS:
         if response.status_code != 200:
             print(str(response.content, 'utf-8'))
             if response.status_code == 401:
-                Credentials().set_pcs_api_key('')   #reset ApiKey
+                try:
+                    Credentials().set_pcs_api_key('')   #reset ApiKey
+                except:
+                    # If keyring is unavailable, we don't want to trigger
+                    # traceback, as the user may have declined to save
+                    # the key in the keyring earlier
+                    pass
             return None
 
         # Verify expected headers
@@ -479,7 +485,13 @@ class PCS:
         if response.status_code != 200:
             print(str(response.content, 'utf-8'))
             if response.status_code == 401:
-                Credentials().set_pcs_api_key('')   #reset ApiKey
+                try:
+                    Credentials().set_pcs_api_key('')   #reset ApiKey
+                except:
+                    # If keyring is unavailable, we don't want to trigger
+                    # traceback, as the user may have declined to save
+                    # the key in the keyring earlier
+                    pass
             return None
 
         # Verify expected headers
