@@ -39,7 +39,7 @@ if system() == 'Windows':
 from lib.intelsgx.credential import Credentials
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
-from pkg_resources import parse_version
+from packaging.version import Version
 
 certBegin= '-----BEGIN CERTIFICATE-----'
 certEnd= '-----END CERTIFICATE-----'
@@ -90,7 +90,7 @@ class PCS:
         
         PARAMS = {}
         https = requests.Session()
-        if parse_version(urllib3.__version__) < parse_version('1.26.0'):
+        if Version(urllib3.__version__) < Version('1.26.0'):
             https.mount("https://", HTTPAdapter(max_retries=Retry(method_whitelist=["HEAD", "GET", "PUT", "POST", "DELETE", "OPTIONS", "TRACE"])))
         else:
             https.mount("https://", HTTPAdapter(max_retries=Retry(allowed_methods=["HEAD", "GET", "PUT", "POST", "DELETE", "OPTIONS", "TRACE"])))
@@ -108,7 +108,7 @@ class PCS:
         
         PARAMS = {}
         https = requests.Session()
-        if parse_version(urllib3.__version__) < parse_version('1.26.0'):
+        if Version(urllib3.__version__) < Version('1.26.0'):
             https.mount("https://", HTTPAdapter(max_retries=Retry(method_whitelist=["HEAD", "GET", "PUT", "POST", "DELETE", "OPTIONS", "TRACE"])))
         else:
             https.mount("https://", HTTPAdapter(max_retries=Retry(allowed_methods=["HEAD", "GET", "PUT", "POST", "DELETE", "OPTIONS", "TRACE"])))
