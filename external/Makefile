@@ -29,29 +29,7 @@
 #
 #
 
-GTEST_SRC_PATH := gtest/src
-GTEST_BUILD_PATH := gtest/build
-GTEST_CMAKE_BUILD_PATH := gtest/cmake-build
-
 .PHONY: all clean
 
-all: post-build
-
-pre-build:
-	mkdir -p $(GTEST_BUILD_PATH)
-	mkdir -p $(GTEST_CMAKE_BUILD_PATH)
-
-
-post-build: main-build
-	cp -r $(GTEST_SRC_PATH)/googletest/include $(GTEST_BUILD_PATH)
-	cp -r $(GTEST_SRC_PATH)/googlemock/include/gmock $(GTEST_BUILD_PATH)/include/
-	cp -r $(GTEST_CMAKE_BUILD_PATH)/lib $(GTEST_BUILD_PATH)
-
-main-build: pre-build
-	cd $(GTEST_CMAKE_BUILD_PATH) && cmake ../src
-	$(MAKE) -j4 -C $(GTEST_CMAKE_BUILD_PATH)
-
+all:
 clean:
-	$(MAKE) clean -C $(GTEST_CMAKE_BUILD_PATH)
-	rm -r $(GTEST_CMAKE_BUILD_PATH)/*
-	rm -r $(GTEST_BUILD_PATH)/*
