@@ -30,5 +30,8 @@
     "test": "NODE_ENV=test mocha ../../../unittests/psw/pccs_ut/test.js --timeout 120000 --exit",
     "offline": "NODE_ENV=test_offline mocha ../../../unittests/psw/pccs_ut/test_offline.js --timeout 120000 --exit",
     "req": "NODE_ENV=test_req mocha ../../../unittests/psw/pccs_ut/test_req.js --timeout 120000 --exit"
+  },
+  "overrides": {
+    "tar": "^7.0.0"
   }
 }
